@@ -9,7 +9,6 @@ packages = [{include = "{{ cookiecutter.project_slug }}", from = "."}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-pyyaml = "^6.0.1"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.4.0"
