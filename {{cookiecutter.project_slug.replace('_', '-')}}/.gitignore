@@ -13,9 +13,10 @@ __pycache__
 #
 data/*
 !data/.gitkeep
-!data/logs/
-data/logs/*
-!data/logs/.gitkeep
+
+#
+logs/*
+!logs/.gitkeep
 
 #
 notebooks/*
