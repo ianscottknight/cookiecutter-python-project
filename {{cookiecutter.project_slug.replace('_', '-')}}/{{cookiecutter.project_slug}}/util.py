@@ -3,10 +3,11 @@ from typing import TYPE_CHECKING, List, Tuple, Dict, Optional, Union, Any
 if TYPE_CHECKING:
     pass
 
-import json
 import logging
 import logging.config
 import pathlib
+
+import yaml
 
 
 logger = logging.getLogger(__name__)
@@ -42,9 +43,10 @@ def setup_logging(stdout_level: Optional[str] = None) -> None:
         raise FileNotFoundError(f"Logging configuration file not found: {config_file}") from e
     except yaml.YAMLError as e:
         raise ValueError(f"Error parsing logging configuration file: {config_file}") from e
-    logging.config.dictConfig(config)
 
     # Set the logging level for the root logger if stdout_level is provided
     # Otherwise, the level is set by the logging configuration
     if stdout_level is not None:
-        logging.getLogger().setLevel(getattr(logging, stdout_level.upper()))
+        config['handlers']['console']['level'] = stdout_level.upper()
+
+    logging.config.dictConfig(config)
