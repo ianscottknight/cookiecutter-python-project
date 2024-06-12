@@ -5,6 +5,7 @@ if TYPE_CHECKING:
 
 import json
 import logging
+import logging.config
 import pathlib
 
 
@@ -36,10 +37,10 @@ def setup_logging(stdout_level: Optional[str] = None) -> None:
     config_file = pathlib.Path(__file__).parent.joinpath("logging_configs/default_config.yaml")
     try:
         with open(config_file) as f_in:
-            config = json.load(f_in)
+            config = yaml.safe_load(f_in)
     except FileNotFoundError as e:
         raise FileNotFoundError(f"Logging configuration file not found: {config_file}") from e
-    except json.JSONDecodeError as e:
+    except yaml.YAMLError as e:
         raise ValueError(f"Error parsing logging configuration file: {config_file}") from e
     logging.config.dictConfig(config)
 
